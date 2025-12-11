@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Hospital_Project.Data;
 using Hospital_Project.Models;
-
+using System.Linq;
 namespace Hospital_Project.Controllers
 {
     public class PaymentsController : Controller
@@ -63,11 +63,11 @@ namespace Hospital_Project.Controllers
                     .ToListAsync();
             }
 
-            if (!ViewBag.Appointments.Any())
-            {
-                TempData["Error"] = "لا يوجد مواعيد صالحة للدفع.";
-                return RedirectToAction("Index", "Payments");
-            }
+            //if (!ViewBag.Appointments.Any())
+            //{
+            //    TempData["Error"] = "لا يوجد مواعيد صالحة للدفع.";
+            //    return RedirectToAction("Index", "Payments");
+            //}
 
             return View();
         }

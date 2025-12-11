@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Hospital_Project_Final</title>
+    <title>@ViewData["Title"] - Hospital_System</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -25,12 +25,16 @@
 
         <!-- الروابط -->
         <div class="collapse navbar-collapse" id="mainNav">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Dashboard")">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Privacy", "Home")">Privacy</a>
+            
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+               <li class="nav-item">
+                 <a class="nav-link" href="@Url.Action("Index", "Dashboard")">لوحة التحكم</a>
+              </li>
+              <li class="nav-item">
+                 <a class="nav-link" href="@Url.Action("Index", "Appointments")">📅 المواعيد</a>
+              </li>
+                   <li class="nav-item">
+              <a class="nav-link" href="@Url.Action("Index", "Payments")">💰 المدفوعات</a>
                 </li>
             </ul>
         </div>
@@ -44,7 +48,7 @@
     </div>
     <footer class="border-top footer text-muted mt-5 py-3 bg-light">
         <div class="container text-center">
-            &copy; 2025 - Hospital_Project_Final - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - Hospital_System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
