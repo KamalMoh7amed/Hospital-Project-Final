@@ -20,73 +20,74 @@
             }
         </div>
     </div>
-    <!-- الإحصائيات -->
-    <div class="row g-4 mb-5">
-        <div class="col-md-2">
-            <div class="card text-bg-primary text-center shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@ViewBag.TotalPatients</h5>
-                    <p class="card-text mb-0">مريض</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card text-bg-success text-center shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@ViewBag.TotalDoctors</h5>
-                    <p class="card-text mb-0">دكتور</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card text-bg-info text-center shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@ViewBag.TotalAppointments</h5>
-                    <p class="card-text mb-0">موعد</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card text-bg-warning text-center shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@ViewBag.TotalRecords</h5>
-                    <p class="card-text mb-0">سجل طبي</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card text-bg-danger text-center shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">@ViewBag.TotalPayments</h5>
-                    <p class="card-text mb-0">دفعة</p>
-                </div>
-            </div>
+   <!-- الإحصائيات - متوسطة في الصفحة -->
+<div class="d-flex justify-content-center align-items-start flex-wrap gap-4 my-4">
+    <div class="card text-bg-primary text-center shadow-sm" style="min-width: 120px;">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.TotalPatients</h5>
+            <p class="card-text mb-0">مريض</p>
         </div>
     </div>
+    <div class="card text-bg-success text-center shadow-sm" style="min-width: 120px;">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.TotalDoctors</h5>
+            <p class="card-text mb-0">دكتور</p>
+        </div>
+    </div>
+    <div class="card text-bg-info text-center shadow-sm" style="min-width: 120px;">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.TotalAppointments</h5>
+            <p class="card-text mb-0">موعد</p>
+        </div>
+    </div>
+    <div class="card text-bg-warning text-center shadow-sm" style="min-width: 120px;">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.TotalRecords</h5>
+            <p class="card-text mb-0">سجل طبي</p>
+        </div>
+    </div>
+    <div class="card text-bg-danger text-center shadow-sm" style="min-width: 120px;">
+        <div class="card-body">
+            <h5 class="card-title">@ViewBag.TotalPayments</h5>
+            <p class="card-text mb-0">دفعة</p>
+        </div>
+    </div>
+</div>
+   
+<!-- الأزرار -->
+<div class="row g-3 mb-4">
+    <div class="col-md-2">
+        <a asp-controller="Patients" asp-action="Index" class="btn btn-outline-primary w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
+            <i class="bi bi-person me-2"></i> إدارة المرضى
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a asp-controller="Doctors" asp-action="Index" class="btn btn-outline-success w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
+            <i class="bi bi-person-plus me-2"></i> إدارة الدكاترة
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a asp-controller="Appointments" asp-action="Index" class="btn btn-outline-info w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
+            <i class="bi bi-calendar-check me-2"></i> إدارة المواعيد
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a asp-controller="MedicalRecords" asp-action="Index" class="btn btn-outline-warning w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
+            <i class="bi bi-journal-medical me-2"></i> إدارة السجلات
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a asp-controller="Prescriptions" asp-action="Index" class="btn btn-outline-info w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
+            <i class="bi bi-capsule me-2"></i> إدارة الوصفات
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a asp-controller="Payments" asp-action="Index" class="btn btn-outline-danger w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
+            <i class="bi bi-cash me-2"></i> إدارة المدفوعات
+        </a>
+    </div>
+</div>
 
-    <!-- روابط سريعة -->
-    <div class="row g-4 mb-5">
-        <div class="col-md-3">
-            <a asp-controller="Patients" asp-action="Index" class="btn btn-outline-primary w-100 py-3 fs-5">
-                👤 إدارة المرضى
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-controller="Doctors" asp-action="Index" class="btn btn-outline-success w-100 py-3 fs-5">
-                👨‍⚕️ إدارة الدكاترة
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-controller="Appointments" asp-action="Index" class="btn btn-outline-info w-100 py-3 fs-5">
-                📅 إدارة المواعيد
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a asp-controller="MedicalRecords" asp-action="Index" class="btn btn-outline-warning w-100 py-3 fs-5">
-                📋 السجلات الطبية
-            </a>
-        </div>
-    </div>
 
     <!-- مواعيد اليوم -->
     <div class="card shadow-sm mb-4">

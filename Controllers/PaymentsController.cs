@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Hospital_Project.Data;
 using Hospital_Project.Models;
 using System.Linq;
+
 namespace Hospital_Project.Controllers
 {
     public class PaymentsController : Controller
@@ -14,66 +15,70 @@ namespace Hospital_Project.Controllers
             _context = context;
         }
 
-        // GET: Payments
         public async Task<IActionResult> Index()
         {
-            var payments = await _context.Payments
+            return View(await _context.Payments
                 .Include(p => p.Appointment)
-                    .ThenInclude(a => a.Patient)
-                .Include(p => p.Appointment)
-                    .ThenInclude(a => a.Doctor)
-                .ToListAsync();
-            return View(payments);
+                .ThenInclude(a => a.Patient)
+                .ToListAsync());
         }
 
-        // GET: Payments/Create
-        public async Task<IActionResult> Create()
-        {
-            ViewBag.Appointments = await _context.Appointments
-                .Include(a => a.Patient)
-                .Include(a => a.Doctor)
-                .Where(a => string.IsNullOrEmpty(a.AppointmentStatus) || a.AppointmentStatus != "دفع مكتمل")
-                .ToListAsync();
-            return View();
-        }
-
-        // POST: Payments/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        // GET: Payments/Create
         public async Task<IActionResult> Create(int? appointmentId = null)
         {
-            var appointmentsQuery = _context.Appointments
-                .Include(a => a.Patient)
-                .Include(a => a.Doctor);
+            IQueryable<Appointment> query = _context.Appointments
+                .Where(a => a.AppointmentStatus != "دفع مكتمل");
 
             if (appointmentId.HasValue)
             {
-                // لو جا من صفحة المواعيد، نعرض الموعد ده فقط
                 ViewBag.SelectedAppointmentId = appointmentId.Value;
-                ViewBag.Appointments = await appointmentsQuery
-                    .Where(a => a.Id == appointmentId.Value && a.AppointmentStatus != "دفع مكتمل")
-                    .ToListAsync();
+                ViewBag.Appointments = await query.Where(a => a.Id == appointmentId).ToListAsync();
             }
             else
             {
-                // لو دخل من صفحة المدفوعات مباشرةً
-                ViewBag.Appointments = await appointmentsQuery
-                    .Where(a => a.AppointmentStatus != "دفع مكتمل")
-                    .ToListAsync();
+                ViewBag.Appointments = await query.ToListAsync();
             }
 
-            //if (!ViewBag.Appointments.Any())
-            //{
-            //    TempData["Error"] = "لا يوجد مواعيد صالحة للدفع.";
-            //    return RedirectToAction("Index", "Payments");
-            //}
+            var list = ViewBag.Appointments as List<Appointment>;
+            if (list == null || !list.Any())
+            {
+                TempData["Error"] = "لا يوجد مواعيد صالحة للدفع.";
+                return RedirectToAction("Index");
+            }
 
             return View();
         }
 
-        // GET: Payments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Payments payment)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Payments.Add(payment);
+                await _context.SaveChangesAsync();
+
+                var appt = await _context.Appointments.FindAsync(payment.AppointmentId);
+                if (appt != null)
+                {
+                    appt.AppointmentStatus = "دفع مكتمل";
+                    _context.Update(appt);
+                    await _context.SaveChangesAsync();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Appointments = await _context.Appointments
+                .Where(a => a.AppointmentStatus != "دفع مكتمل")
+                .ToListAsync();
+            return View(payment);
+        }
+
+        // ... (Edit, Delete — قول لي لو عايزهم)
+    
+
+// GET: Payments/Edit/5
+public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
             var payment = await _context.Payments

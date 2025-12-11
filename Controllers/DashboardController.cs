@@ -66,6 +66,13 @@ namespace Hospital_Project.Controllers
                 .Include(p => p.Appointment)
                 .ToListAsync();
 
+            // 👇 إضافة الوصفات
+            ViewBag.Prescriptions = await _context.Prescriptions
+                .Where(p => p.MedicalRecord.PatientId == patient.Id)
+                .Include(p => p.MedicalRecord)
+                .ThenInclude(mr => mr.Doctor)
+                .ToListAsync();
+
             return View("PatientDetails");
         }
     }

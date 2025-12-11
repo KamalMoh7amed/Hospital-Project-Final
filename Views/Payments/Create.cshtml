@@ -23,12 +23,9 @@
             else
             {
                 <select name="AppointmentId" class="form-select" required>
-                    <option value="">-- اختر موعد --</option>
                     @foreach (var a in ViewBag.Appointments as List<Hospital_Project.Models.Appointment>)
                     {
-                        <option value="@a.Id">
-                            @a.Patient?.PatientName | د. @a.Doctor?.DoctorName | @a.AppointmentDate
-                        </option>
+                        <option value="@a.Id">@a.Patient?.PatientName - د. @a.Doctor?.DoctorName (@a.AppointmentDate)</option>
                     }
                 </select>
             }

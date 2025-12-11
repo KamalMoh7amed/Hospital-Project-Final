@@ -1,8 +1,78 @@
-﻿@{
+﻿<div class="d-flex justify-content-end mb-3">
+    <button onclick="printPage()" class="btn btn-outline-primary me-2">
+        <i class="bi bi-printer me-1"></i> طباعة
+    </button>
+    <button onclick="downloadPDF()" class="btn btn-outline-success">
+        <i class="bi bi-file-earmark-pdf me-1"></i> تنزيل PDF
+    </button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+    function printPage() {
+        window.print();
+    }
+
+    async function downloadPDF() {
+        const element = document.body;
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            useCORS: true
+        });
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a4'
+        });
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('تفاصيل_المريض.pdf');
+    }
+</script>
+
+@{
     ViewData["Title"] = "تفاصيل المريض";
     var patient = ViewBag.Patient as Hospital_Project.Models.Patient;
 }
+<head>
+    <style>
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
 
+        .card-header {
+            font-weight: bold;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .border-rounded {
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        h5 {
+            color: #333;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+    </style>
+</head>
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>👤 تفاصيل المريض: <span class="text-primary">@patient.PatientName</span></h2>
@@ -94,6 +164,34 @@
             }
         </div>
     </div>
+    <!-- الوصفات الطبية -->
+<div class="card mb-4">
+    <div class="card-header bg-light">
+        <h5>💊 الوصفات الطبية (@ViewBag.Prescriptions?.Count)</h5>
+    </div>
+    <div class="card-body">
+        @if (ViewBag.Prescriptions != null && ViewBag.Prescriptions.Count > 0)
+        {
+            @foreach (var p in ViewBag.Prescriptions as List<Hospital_Project.Models.Prescription>)
+            {
+                <div class="border rounded p-3 mb-3">
+                    <h6>الدواء: @p.MedicationName</h6>
+                    <p><strong>الجرعة:</strong> @p.Dosage</p>
+                    <p><strong>التكرار:</strong> @p.Frequency مرة/يوم</p>
+                    <p><strong>المدة:</strong> من @p.StartDate إلى @p.EndDate</p>
+                    @if (!string.IsNullOrEmpty(p.SpecialInstructions))
+                    {
+                        <p><strong>تعليمات خاصة:</strong> @p.SpecialInstructions</p>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted">لا يوجد وصفات طبية.</p>
+        }
+    </div>
+</div>
 
     <!-- المدفوعات -->
     <div class="card">

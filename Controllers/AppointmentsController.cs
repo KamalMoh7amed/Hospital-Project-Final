@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Hospital_Project.Data;
 using Hospital_Project.Models;
-
+using System.Linq;
 namespace Hospital_Project.Controllers
 {
     public class AppointmentsController : Controller
