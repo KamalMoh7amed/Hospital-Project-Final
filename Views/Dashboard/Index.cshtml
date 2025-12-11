@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "لوحة التحكم - مستشفى";
+}
+
+<div class="container mt-4">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold text-primary">🏥 لوحة تحكم المستشفى</h1>
+        <p class="lead text-muted">مرحباً بك! إليك نظرة عامة على النظام</p>
+    </div>
+    <!-- شريط البحث -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form asp-controller="Dashboard" asp-action="SearchPatient" method="post" class="d-flex">
+                <input type="text" name="searchTerm" class="form-control" placeholder="ابحث عن مريض باسمه..." required />
+                <button type="submit" class="btn btn-primary ms-2">بحث</button>
+            </form>
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger mt-2">@TempData["Error"]</div>
+            }
+        </div>
+    </div>
+    <!-- الإحصائيات -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-2">
+            <div class="card text-bg-primary text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@ViewBag.TotalPatients</h5>
+                    <p class="card-text mb-0">مريض</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-bg-success text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@ViewBag.TotalDoctors</h5>
+                    <p class="card-text mb-0">دكتور</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-bg-info text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@ViewBag.TotalAppointments</h5>
+                    <p class="card-text mb-0">موعد</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-bg-warning text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@ViewBag.TotalRecords</h5>
+                    <p class="card-text mb-0">سجل طبي</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card text-bg-danger text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@ViewBag.TotalPayments</h5>
+                    <p class="card-text mb-0">دفعة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- روابط سريعة -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <a asp-controller="Patients" asp-action="Index" class="btn btn-outline-primary w-100 py-3 fs-5">
+                👤 إدارة المرضى
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-controller="Doctors" asp-action="Index" class="btn btn-outline-success w-100 py-3 fs-5">
+                👨‍⚕️ إدارة الدكاترة
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-controller="Appointments" asp-action="Index" class="btn btn-outline-info w-100 py-3 fs-5">
+                📅 إدارة المواعيد
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a asp-controller="MedicalRecords" asp-action="Index" class="btn btn-outline-warning w-100 py-3 fs-5">
+                📋 السجلات الطبية
+            </a>
+        </div>
+    </div>
+
+    <!-- مواعيد اليوم -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">📅 مواعيد اليوم</h5>
+        </div>
+        <div class="card-body">
+            @if (ViewBag.TodayAppointments != null && ViewBag.TodayAppointments.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>الوقت</th>
+                                <th>المريض</th>
+                                <th>الدكتور</th>
+                                <th>الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var appt in ViewBag.TodayAppointments as List<Hospital_Project.Models.Appointment>)
+                            {
+                                <tr>
+                                    <td>@appt.Time</td>
+                                    <td>@appt.Patient?.PatientName</td>
+                                    <td>د. @appt.Doctor?.DoctorName</td>
+                                    <td>
+                                        @if (appt.AppointmentStatus == "دفع مكتمل")
+                                        {
+                                            <span class="badge bg-success">مكتمل</span>
+                                        }
+                                        else if (appt.AppointmentStatus == "مؤكد")
+                                        {
+                                            <span class="badge bg-warning">مؤكد</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">معلق</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">لا يوجد مواعيد مجدولة اليوم.</p>
+            }
+        </div>
+    </div>
+</div>

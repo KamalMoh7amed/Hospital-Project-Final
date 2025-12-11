@@ -1,0 +1,72 @@
+﻿@model Hospital_Project.Models.Payments
+
+@{
+    ViewData["Title"] = "تسجيل دفع";
+}
+
+<div class="container mt-4">
+    <h2>💰 تسجيل دفعة جديدة</h2>
+
+    <form asp-action="Create" class="row g-3 mt-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="col-12">
+            <label class="form-label">الموعد</label>
+            @if (ViewBag.SelectedAppointmentId != null)
+            {
+                var appt = ViewBag.Appointments[0] as Hospital_Project.Models.Appointment;
+                <div class="form-control" readonly>
+                    @appt.Patient?.PatientName | د. @appt.Doctor?.DoctorName | @appt.AppointmentDate
+                </div>
+                <input type="hidden" name="AppointmentId" value="@appt.Id" />
+            }
+            else
+            {
+                <select name="AppointmentId" class="form-select" required>
+                    <option value="">-- اختر موعد --</option>
+                    @foreach (var a in ViewBag.Appointments as List<Hospital_Project.Models.Appointment>)
+                    {
+                        <option value="@a.Id">
+                            @a.Patient?.PatientName | د. @a.Doctor?.DoctorName | @a.AppointmentDate
+                        </option>
+                    }
+                </select>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AmountPaid" class="form-label">المبلغ المدفوع *</label>
+            <input asp-for="AmountPaid" class="form-control" type="number" step="0.01" min="0" placeholder="مثال: 250.00" required />
+            <span asp-validation-for="AmountPaid" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="PaymentDate" class="form-label">تاريخ الدفع *</label>
+            <input asp-for="PaymentDate" class="form-control" type="date" required />
+            <span asp-validation-for="PaymentDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="PaymentMethod" class="form-label">طريقة الدفع</label>
+            <input asp-for="PaymentMethod" class="form-control" placeholder="نقدًا، فيزا، تحويل..." />
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="AdditionalNote" class="form-label">ملاحظات (اختياري)</label>
+            <textarea asp-for="AdditionalNote" class="form-control" rows="2"></textarea>
+            <span asp-validation-for="AdditionalNote" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">✅ تسجيل الدفع</button>
+            <a asp-action="Index" class="btn btn-secondary">⬅️ الرجوع</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

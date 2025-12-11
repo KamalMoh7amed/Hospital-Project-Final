@@ -1,0 +1,68 @@
+﻿@model Hospital_Project.Models.Appointment
+
+@{
+    ViewData["Title"] = "تعديل موعد";
+}
+
+<div class="container mt-4">
+    <h2>✏️ تعديل موعد</h2>
+
+    <form asp-action="Edit" class="row g-3 mt-3">
+        <input type="hidden" asp-for="Id" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="col-md-6">
+            <label asp-for="PatientId" class="form-label">المريض</label>
+            <select asp-for="PatientId" class="form-select" required>
+                <option value="">-- اختر مريض --</option>
+                @foreach (var patient in ViewBag.Patients as List<Hospital_Project.Models.Patient>)
+                {
+                    <option value="@patient.Id">@patient.PatientName</option>
+                }
+            </select>
+            <span asp-validation-for="PatientId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DoctorId" class="form-label">الدكتور</label>
+            <select asp-for="DoctorId" class="form-select" required>
+                <option value="">-- اختر دكتور --</option>
+                @foreach (var doctor in ViewBag.Doctors as List<Hospital_Project.Models.Doctor>)
+                {
+                    <option value="@doctor.Id">@doctor.DoctorName - @doctor.Specialization</option>
+                }
+            </select>
+            <span asp-validation-for="DoctorId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AppointmentDate" class="form-label">التاريخ</label>
+            <input asp-for="AppointmentDate" class="form-control" type="date" required />
+            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Time" class="form-label">الوقت</label>
+            <input asp-for="Time" class="form-control" type="time" required />
+            <span asp-validation-for="Time" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AppointmentStatus" class="form-label">الحالة</label>
+            <input asp-for="AppointmentStatus" class="form-control" placeholder="مؤكد، ملغى، ..." />
+            <span asp-validation-for="AppointmentStatus" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">💾 حفظ التعديلات</button>
+            <a asp-action="Index" class="btn btn-secondary">⬅️ الرجوع للقائمة</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,61 @@
+﻿@model Hospital_Project.Models.Prescription
+
+@{
+    ViewData["Title"] = "تعديل وصفة";
+}
+
+<div class="container mt-4">
+    <h2>✏️ تعديل وصفة طبية</h2>
+
+    <form asp-action="Edit" class="row g-3">
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="MedicalRecordId" />
+
+        <div class="col-md-6">
+            <label asp-for="MedicationName" class="form-label">الدواء</label>
+            <input asp-for="MedicationName" class="form-control" required />
+            <span asp-validation-for="MedicationName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Dosage" class="form-label">الجرعة</label>
+            <input asp-for="Dosage" class="form-control" required />
+            <span asp-validation-for="Dosage" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="Frequency" class="form-label">المرات/اليوم</label>
+            <input asp-for="Frequency" class="form-control" type="number" min="1" required />
+            <span asp-validation-for="Frequency" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="StartDate" class="form-label">من</label>
+            <input asp-for="StartDate" class="form-control" type="date" required />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="EndDate" class="form-label">إلى</label>
+            <input asp-for="EndDate" class="form-control" type="date" required />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="SpecialInstructions" class="form-label">تعليمات</label>
+            <textarea asp-for="SpecialInstructions" class="form-control" rows="2"></textarea>
+            <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">💾 حفظ</button>
+            <a asp-action="Index" class="btn btn-secondary">⬅️ إلغاء</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

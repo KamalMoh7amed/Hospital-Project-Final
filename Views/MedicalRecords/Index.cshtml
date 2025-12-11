@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Hospital_Project.Models.MedicalRecord>
+
+@{
+    ViewData["Title"] = "السجلات الطبية";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📋 السجلات الطبية</h2>
+        <a asp-action="Create" class="btn btn-success">➕ إضافة سجل طبي</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>المريض</th>
+                        <th>الدكتور</th>
+                        <th>الموعد</th>
+                        <th>التشخيص</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@r.Patient?.PatientName</td>
+                            <td>@r.Doctor?.DoctorName</td>
+                            <td>@r.Appointment?.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                            <td>@r.Diagnosis</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@r.Id" class="btn btn-sm btn-warning">✏️</a>
+                                <a asp-action="Delete" asp-route-id="@r.Id" class="btn btn-sm btn-danger ms-1">🗑️</a>
+                                @if (r.Prescription == null)
+                                {
+                                    <a asp-controller="Prescriptions" asp-action="Create" asp-route-medicalRecordId="@r.Id" class="btn btn-sm btn-info ms-1">💊 إضافة وصفة</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Prescriptions" asp-action="Details" asp-route-id="@r.Prescription.Id" class="btn btn-sm btn-secondary ms-1">💊 الوصفة</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            💤 مفيش سجلات طبية. <a asp-action="Create">ابدأ بإنشاء سجل!</a>
+        </div>
+    }
+</div>

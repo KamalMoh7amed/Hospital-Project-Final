@@ -1,0 +1,31 @@
+﻿@model Hospital_Project.Models.MedicalRecord
+
+@{
+    ViewData["Title"] = "حذف سجل طبي";
+}
+
+<div class="container mt-4">
+    <h2>🗑️ تأكيد حذف السجل الطبي</h2>
+
+    <div class="alert alert-danger">
+        <h5>هل أنت متأكد من حذف هذا السجل الطبي؟</h5>
+        <p>ملاحظة: لا يمكن التراجع بعد الحذف.</p>
+    </div>
+
+    <div class="card p-3 mb-3">
+        <p><strong>المريض:</strong> @Model.Patient?.PatientName</p>
+        <p><strong>الدكتور:</strong> د. @Model.Doctor?.DoctorName (@Model.Doctor?.Specialization)</p>
+        <p><strong>الموعد:</strong> @Model.Appointment?.AppointmentDate.ToString("yyyy-MM-dd") @Model.Appointment?.Time</p>
+        <p><strong>التشخيص:</strong> @Model.Diagnosis</p>
+        @if (!string.IsNullOrEmpty(Model.Prescription?.MedicationName))
+        {
+            <p class="text-warning">⚠️ يوجد وصفة طبية مرتبطة — يُنصح بحذفها أولًا.</p>
+        }
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">🗑️ نعم، احذف السجل</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ إلغاء</a>
+    </form>
+</div>

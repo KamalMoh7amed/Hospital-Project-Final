@@ -1,0 +1,39 @@
+﻿@model Hospital_Project.Models.Appointment
+
+@{
+    ViewData["Title"] = "حذف موعد";
+}
+
+<div class="container mt-4">
+    <h2>🗑️ تأكيد الحذف</h2>
+
+    <div class="alert alert-danger">
+        <h5>هل أنت متأكد من حذف هذا الموعد؟</h5>
+        <p>ملاحظة: لا يمكن التراجع عن هذا الإجراء.</p>
+    </div>
+
+    <div class="card p-4 mb-4">
+        <dl class="row">
+            <dt class="col-sm-3">المريض:</dt>
+            <dd class="col-sm-9">@Model.Patient?.PatientName</dd>
+
+            <dt class="col-sm-3">الدكتور:</dt>
+            <dd class="col-sm-9">@Model.Doctor?.DoctorName</dd>
+
+            <dt class="col-sm-3">التاريخ:</dt>
+            <dd class="col-sm-9">@Model.AppointmentDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">الوقت:</dt>
+            <dd class="col-sm-9">@Model.Time</dd>
+
+            <dt class="col-sm-3">الحالة:</dt>
+            <dd class="col-sm-9">@Model.AppointmentStatus</dd>
+        </dl>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">🗑️ نعم، احذف</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ إلغاء</a>
+    </form>
+</div>

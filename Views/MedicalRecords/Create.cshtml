@@ -1,0 +1,82 @@
+﻿@model Hospital_Project.Models.MedicalRecord
+
+@{
+    ViewData["Title"] = "إضافة سجل طبي جديد";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📋 إضافة سجل طبي جديد</h2>
+        <a asp-action="Index" class="btn btn-secondary">⬅️ الرجوع للقائمة</a>
+    </div>
+
+    <form asp-action="Create" class="row g-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="col-md-4">
+            <label asp-for="PatientId" class="form-label">المريض *</label>
+            <select asp-for="PatientId" class="form-select" required>
+                <option value="">-- اختر مريض --</option>
+                @foreach (var patient in ViewBag.Patients as List<Hospital_Project.Models.Patient>)
+                {
+                    <option value="@patient.Id">@patient.PatientName</option>
+                }
+            </select>
+            <span asp-validation-for="PatientId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="DoctorId" class="form-label">الدكتور *</label>
+            <select asp-for="DoctorId" class="form-select" required>
+                <option value="">-- اختر دكتور --</option>
+                @foreach (var doctor in ViewBag.Doctors as List<Hospital_Project.Models.Doctor>)
+                {
+                    <option value="@doctor.Id">@doctor.DoctorName (@doctor.Specialization)</option>
+                }
+            </select>
+            <span asp-validation-for="DoctorId" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="AppointmentId" class="form-label">الموعد *</label>
+            <select asp-for="AppointmentId" class="form-select" required>
+                <option value="">-- اختر موعد --</option>
+                @foreach (var appt in ViewBag.Appointments as List<Hospital_Project.Models.Appointment>)
+                {
+                    <option value="@appt.Id">
+                        @appt.Patient?.PatientName | د. @appt.Doctor?.DoctorName | @appt.AppointmentDate
+                    </option>
+                }
+            </select>
+            <span asp-validation-for="AppointmentId" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="Description" class="form-label">الوصف (شكاوى المريض، الأعراض...)</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="مثال: صداع مستمر منذ 3 أيام..."></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="Diagnosis" class="form-label">التشخيص</label>
+            <textarea asp-for="Diagnosis" class="form-control" rows="2" placeholder="مثال: صداع نصفي"></textarea>
+            <span asp-validation-for="Diagnosis" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="AdditionalNote" class="form-label">ملاحظات إضافية</label>
+            <textarea asp-for="AdditionalNote" class="form-control" rows="2" placeholder="أي ملاحظات أخرى"></textarea>
+            <span asp-validation-for="AdditionalNote" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">✅ حفظ السجل الطبي</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

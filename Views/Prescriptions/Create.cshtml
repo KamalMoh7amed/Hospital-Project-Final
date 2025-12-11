@@ -1,0 +1,88 @@
+﻿@model Hospital_Project.Models.Prescription
+
+@{
+    ViewData["Title"] = "إضافة وصفة طبية";
+}
+
+<div class="container mt-4">
+    <h2>💊 إضافة وصفة طبية</h2>
+
+    @if (ViewBag.SelectedMedicalRecord != null)
+    {
+        <div class="alert alert-info mb-3">
+            السجل الطبي: <strong>@ViewBag.SelectedMedicalRecord.Patient?.PatientName</strong> - د. <strong>@ViewBag.SelectedMedicalRecord.Doctor?.DoctorName</strong>
+        </div>
+    }
+
+    <form asp-action="Create" class="row g-3">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        @if (ViewBag.SelectedMedicalRecord == null)
+        {
+            <div class="col-12">
+                <label class="form-label">اختر السجل الطبي</label>
+                <select asp-for="MedicalRecordId" class="form-select" required>
+                    <option value="">-- اختر سجل طبي --</option>
+                    @foreach (var mr in ViewBag.MedicalRecords as List<Hospital_Project.Models.MedicalRecord>)
+                    {
+                        <option value="@mr.Id">
+                            @mr.Patient?.PatientName - د. @mr.Doctor?.DoctorName (@mr.Id)
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="MedicalRecordId" class="text-danger"></span>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="MedicalRecordId" />
+        }
+
+        <div class="col-md-6">
+            <label asp-for="MedicationName" class="form-label">اسم الدواء</label>
+            <input asp-for="MedicationName" class="form-control" placeholder="مثل: باراسيتامول" required />
+            <span asp-validation-for="MedicationName" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Dosage" class="form-label">الجرعة</label>
+            <input asp-for="Dosage" class="form-control" placeholder="مثل: 500 مجم كل 8 ساعات" required />
+            <span asp-validation-for="Dosage" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="Frequency" class="form-label">عدد المرات/اليوم</label>
+            <input asp-for="Frequency" class="form-control" type="number" min="1" value="1" required />
+            <span asp-validation-for="Frequency" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="StartDate" class="form-label">تاريخ البدء</label>
+            <input asp-for="StartDate" class="form-control" type="date" required />
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="EndDate" class="form-label">تاريخ الانتهاء</label>
+            <input asp-for="EndDate" class="form-control" type="date" required />
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="SpecialInstructions" class="form-label">تعليمات خاصة</label>
+            <textarea asp-for="SpecialInstructions" class="form-control" rows="2" placeholder="مثل: قبل الأكل، مع كوب ماء..."></textarea>
+            <span asp-validation-for="SpecialInstructions" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">💾 حفظ الوصفة</button>
+            <a asp-action="Index" class="btn btn-secondary">⬅️ الرجوع</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

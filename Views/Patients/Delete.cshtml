@@ -1,0 +1,26 @@
+﻿@model Hospital_Project.Models.Patient
+
+@{
+    ViewData["Title"] = "حذف مريض";
+}
+
+<div class="container mt-4">
+    <h2>🗑️ تأكيد حذف المريض</h2>
+
+    <div class="alert alert-warning">
+        <h5>هل أنت متأكد من حذف <strong>@Model.PatientName</strong>؟</h5>
+        <p>ملاحظة: لا يمكن التراجع بعد الحذف.</p>
+    </div>
+
+    <div class="card p-3 mb-3">
+        <p><strong>الهاتف:</strong> @Model.Phone</p>
+        <p><strong>البريد:</strong> @Model.Email</p>
+        <p><strong>العنوان:</strong> @Model.Address</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">🗑️ نعم، احذف</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ إلغاء</a>
+    </form>
+</div>

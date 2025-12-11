@@ -1,0 +1,32 @@
+﻿@model Hospital_Project.Models.Payments
+
+@{
+    ViewData["Title"] = "حذف دفعة";
+}
+
+<div class="container mt-4">
+    <h2>🗑️ تأكيد حذف الدفعة</h2>
+
+    <div class="alert alert-warning">
+        <h5>هل أنت متأكد من حذف هذه الدفعة؟</h5>
+        <p>ملاحظة: سيتم أيضًا إلغاء حالة "دفع مكتمل" من الموعد المرتبط.</p>
+    </div>
+
+    <div class="card p-3 mb-3">
+        <p><strong>الموعد:</strong> @Model.Appointment?.AppointmentDate.ToString("yyyy-MM-dd")</p>
+        <p><strong>المريض:</strong> @Model.Appointment?.Patient?.PatientName</p>
+        <p><strong>الدكتور:</strong> د. @Model.Appointment?.Doctor?.DoctorName</p>
+        <p><strong>المبلغ:</strong> @Model.AmountPaid.ToString("C")</p>
+        <p><strong>طريقة الدفع:</strong> @Model.PaymentMethod</p>
+        @if (!string.IsNullOrEmpty(Model.AdditionalNote))
+        {
+            <p><strong>الملاحظات:</strong> @Model.AdditionalNote</p>
+        }
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">🗑️ نعم، احذف الدفعة</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ إلغاء</a>
+    </form>
+</div>

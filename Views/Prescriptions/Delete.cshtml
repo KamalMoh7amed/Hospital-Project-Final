@@ -1,0 +1,20 @@
+﻿@model Hospital_Project.Models.Prescription
+
+@{
+    ViewData["Title"] = "حذف وصفة";
+}
+
+<div class="container mt-4">
+    <h2>🗑️ تأكيد حذف الوصفة</h2>
+
+    <div class="alert alert-danger">
+        <p>هل أنت متأكد من حذف وصفة الدواء <strong>@Model.MedicationName</strong>؟</p>
+        <p>السجل الطبي: @Model.MedicalRecord?.Patient?.PatientName - د. @Model.MedicalRecord?.Doctor?.DoctorName</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">🗑️ نعم، احذف</button>
+        <a asp-action="Index" class="btn btn-secondary">❌ إلغاء</a>
+    </form>
+</div>

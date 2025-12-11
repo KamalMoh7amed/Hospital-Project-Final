@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Hospital_Project.Models.Payments>
+
+@{
+    ViewData["Title"] = "المدفوعات";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>💰 المدفوعات</h2>
+        <a asp-action="Create" class="btn btn-success">➕ تسجيل دفع جديد</a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>الموعد</th>
+                        <th>المريض</th>
+                        <th>الدكتور</th>
+                        <th>المبلغ</th>
+                        <th>طريقة الدفع</th>
+                        <th>التاريخ</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in Model)
+                    {
+                        <tr>
+                            <td>@p.Appointment?.AppointmentDate.ToString("yyyy-MM-dd")</td>
+                            <td>@p.Appointment?.Patient?.PatientName</td>
+                            <td>د. @p.Appointment?.Doctor?.DoctorName</td>
+                            <td>@p.AmountPaid.ToString("C")</td>
+                            <td>@p.PaymentMethod</td>
+                            <td>@p.PaymentDate.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-warning">✏️</a>
+                                <a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-sm btn-danger ms-1">🗑️</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            💤 مفيش مدفوعات مسجلة. <a asp-action="Create">سجل أول دفعة!</a>
+        </div>
+    }
+</div>
