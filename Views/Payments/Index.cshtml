@@ -23,7 +23,7 @@
                     <tr>
                         <th>الموعد</th>
                         <th>المريض</th>
-                        <th>الدكتور</th>
+                     
                         <th>المبلغ</th>
                         <th>طريقة الدفع</th>
                         <th>التاريخ</th>
@@ -36,7 +36,6 @@
                         <tr>
                             <td>@p.Appointment?.AppointmentDate.ToString("yyyy-MM-dd")</td>
                             <td>@p.Appointment?.Patient?.PatientName</td>
-                            <td>د. @p.Appointment?.Doctor?.DoctorName</td>
                             <td>@p.AmountPaid.ToString("C")</td>
                             <td>@p.PaymentMethod</td>
                             <td>@p.PaymentDate.ToString("yyyy-MM-dd")</td>

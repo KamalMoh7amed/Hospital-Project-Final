@@ -14,7 +14,6 @@ namespace Hospital_Project.Controllers
             _context = context;
         }
 
-        // GET: MedicalRecords
         public async Task<IActionResult> Index()
         {
             var records = await _context.MedicalRecords
@@ -25,7 +24,6 @@ namespace Hospital_Project.Controllers
             return View(records);
         }
 
-        // GET: MedicalRecords/Create
         public async Task<IActionResult> Create()
         {
             ViewBag.Patients = await _context.Patients.ToListAsync();
@@ -34,7 +32,6 @@ namespace Hospital_Project.Controllers
             return View();
         }
 
-        // POST: MedicalRecords/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MedicalRecord record)
@@ -51,7 +48,6 @@ namespace Hospital_Project.Controllers
             ViewBag.Appointments = await _context.Appointments.ToListAsync();
             return View(record);
         }
-        // GET: MedicalRecords/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -70,7 +66,6 @@ namespace Hospital_Project.Controllers
             return View(medicalRecord);
         }
 
-        // POST: MedicalRecords/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, MedicalRecord medicalRecord)
@@ -100,7 +95,6 @@ namespace Hospital_Project.Controllers
             return View(medicalRecord);
         }
 
-        // GET: MedicalRecords/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -115,7 +109,6 @@ namespace Hospital_Project.Controllers
             return View(medicalRecord);
         }
 
-        // POST: MedicalRecords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

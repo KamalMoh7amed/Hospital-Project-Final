@@ -74,10 +74,8 @@ namespace Hospital_Project.Controllers
             return View(payment);
         }
 
-        // ... (Edit, Delete — قول لي لو عايزهم)
     
 
-// GET: Payments/Edit/5
 public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -92,7 +90,6 @@ public async Task<IActionResult> Edit(int? id)
             return View(payment);
         }
 
-        // POST: Payments/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Payments payment)
@@ -122,7 +119,6 @@ public async Task<IActionResult> Edit(int? id)
             return View(payment);
         }
 
-        // GET: Payments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -134,7 +130,6 @@ public async Task<IActionResult> Edit(int? id)
             return View(payment);
         }
 
-        // POST: Payments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -142,7 +137,6 @@ public async Task<IActionResult> Edit(int? id)
             var payment = await _context.Payments.FindAsync(id);
             if (payment != null)
             {
-                // إلغاء حالة الدفع من الموعد
                 var appointment = await _context.Appointments.FindAsync(payment.AppointmentId);
                 if (appointment != null)
                 {

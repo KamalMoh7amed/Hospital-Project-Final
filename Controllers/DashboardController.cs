@@ -16,14 +16,14 @@ namespace Hospital_Project.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // إحصائيات
+           
             ViewBag.TotalPatients = await _context.Patients.CountAsync();
             ViewBag.TotalDoctors = await _context.Doctors.CountAsync();
             ViewBag.TotalAppointments = await _context.Appointments.CountAsync();
             ViewBag.TotalPayments = await _context.Payments.CountAsync();
             ViewBag.TotalRecords = await _context.MedicalRecords.CountAsync();
 
-            // المواعيد اليوم
+            
             var today = DateOnly.FromDateTime(DateTime.Today);
             ViewBag.TodayAppointments = await _context.Appointments
                 .Include(a => a.Patient)
@@ -56,17 +56,19 @@ namespace Hospital_Project.Controllers
                 .Where(a => a.PatientId == patient.Id)
                 .Include(a => a.Doctor)
                 .ToListAsync();
+
             ViewBag.MedicalRecords = await _context.MedicalRecords
                 .Where(mr => mr.PatientId == patient.Id)
                 .Include(mr => mr.Doctor)
                 .Include(mr => mr.Prescription)
                 .ToListAsync();
+
             ViewBag.Payments = await _context.Payments
                 .Where(p => p.Appointment.PatientId == patient.Id)
                 .Include(p => p.Appointment)
                 .ToListAsync();
 
-            // 👇 إضافة الوصفات
+            
             ViewBag.Prescriptions = await _context.Prescriptions
                 .Where(p => p.MedicalRecord.PatientId == patient.Id)
                 .Include(p => p.MedicalRecord)

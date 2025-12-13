@@ -26,12 +26,10 @@ namespace Hospital_Project.Controllers
             return View(prescriptions);
         }
 
-        // GET: Prescriptions/Create?medicalRecordId=5
         public async Task<IActionResult> Create(int? medicalRecordId)
         {
             if (medicalRecordId == null)
             {
-                // لو دخل من غير تحديد سجل طبي
                 ViewBag.MedicalRecords = await _context.MedicalRecords
                     .Include(mr => mr.Patient)
                     .Include(mr => mr.Doctor)
@@ -45,12 +43,10 @@ namespace Hospital_Project.Controllers
                 return NotFound();
             }
 
-            // تمرير السجل مباشرةً لعرضه في النموذج
             ViewBag.SelectedMedicalRecord = record;
             return View(new Prescription { MedicalRecordId = record.Id });
         }
 
-        // POST: Prescriptions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Prescription prescription)
@@ -62,7 +58,6 @@ namespace Hospital_Project.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // لو فيه خطأ، أعد تحميل البيانات
             ViewBag.MedicalRecords = await _context.MedicalRecords
                 .Include(mr => mr.Patient)
                 .Include(mr => mr.Doctor)
@@ -70,7 +65,6 @@ namespace Hospital_Project.Controllers
             return View(prescription);
         }
 
-        // GET: Prescriptions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -84,7 +78,6 @@ namespace Hospital_Project.Controllers
             return View(prescription);
         }
 
-        // POST: Prescriptions/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Prescription prescription)
@@ -109,7 +102,6 @@ namespace Hospital_Project.Controllers
             return View(prescription);
         }
 
-        // GET: Prescriptions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -123,7 +115,6 @@ namespace Hospital_Project.Controllers
             return View(prescription);
         }
 
-        // POST: Prescriptions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

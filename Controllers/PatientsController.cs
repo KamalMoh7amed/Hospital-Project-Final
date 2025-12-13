@@ -14,19 +14,16 @@ namespace Hospital_Project.Controllers
             _context = context;
         }
 
-        // GET: Patients
         public async Task<IActionResult> Index()
         {
             return View(await _context.Patients.ToListAsync());
         }
 
-        // GET: Patients/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Patients/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Patient patient)
@@ -39,7 +36,6 @@ namespace Hospital_Project.Controllers
             }
             return View(patient);
         }
-        // GET: Patients/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -48,7 +44,6 @@ namespace Hospital_Project.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Patient patient)
@@ -71,7 +66,6 @@ namespace Hospital_Project.Controllers
             return View(patient);
         }
 
-        // GET: Patients/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -80,7 +74,6 @@ namespace Hospital_Project.Controllers
             return View(patient);
         }
 
-        // POST: Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

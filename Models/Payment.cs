@@ -7,14 +7,14 @@ namespace Hospital_Project.Models
         [Key]
         public int Id { get; set; }
 
-        public int AppointmentId { get; set; } // Foreign Key
+        public int AppointmentId { get; set; }
 
         public DateOnly PaymentDate { get; set; }
-        public string? PaymentMethod { get; set; } // مثلاً: نقدًا، فيزا، تحويل...
+        public string? PaymentMethod { get; set; } 
         public decimal AmountPaid { get; set; }
         public string? AdditionalNote { get; set; }
 
-        // العلاقة
+       
         public Appointment? Appointment { get; set; }
     }
 }

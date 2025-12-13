@@ -14,7 +14,6 @@ namespace Hospital_Project.Models
         public TimeOnly Time { get; set; }
         public string? AppointmentStatus { get; set; }
 
-        // العلاقات
         public Patient? Patient { get; set; }
         public Doctor? Doctor { get; set; }
     }

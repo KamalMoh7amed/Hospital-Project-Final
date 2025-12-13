@@ -15,7 +15,6 @@ namespace Hospital_Project.Models
         public string? Diagnosis { get; set; }
         public string? AdditionalNote { get; set; }
 
-        // العلاقات
         public Patient? Patient { get; set; }
         public Doctor? Doctor { get; set; }
         public Appointment? Appointment { get; set; }

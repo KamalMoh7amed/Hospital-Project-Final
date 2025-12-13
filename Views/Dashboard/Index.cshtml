@@ -4,10 +4,13 @@
 
 <div class="container mt-4">
     <div class="text-center mb-5">
-        <h1 class="display-5 fw-bold text-primary">🏥 لوحة تحكم المستشفى</h1>
+        <h1 class="display-5 fw-bold text-primary">🏥 Hospital Dashboard </h1>
         <p class="lead text-muted">مرحباً بك! إليك نظرة عامة على النظام</p>
     </div>
-    <!-- شريط البحث -->
+  
+
+    @* ---------------------------------------------------------------------------------------------------------------------------------------- *@
+
     <div class="row justify-content-center mb-4">
         <div class="col-md-6">
             <form asp-controller="Dashboard" asp-action="SearchPatient" method="post" class="d-flex">
@@ -20,7 +23,10 @@
             }
         </div>
     </div>
-   <!-- الإحصائيات - متوسطة في الصفحة -->
+   @* ---------------------------------------------------------------------------------------------------------------------------------------- *@
+
+
+
 <div class="d-flex justify-content-center align-items-start flex-wrap gap-4 my-4">
     <div class="card text-bg-primary text-center shadow-sm" style="min-width: 120px;">
         <div class="card-body">
@@ -43,18 +49,19 @@
     <div class="card text-bg-warning text-center shadow-sm" style="min-width: 120px;">
         <div class="card-body">
             <h5 class="card-title">@ViewBag.TotalRecords</h5>
-            <p class="card-text mb-0">سجل طبي</p>
+                <p class="card-text mb-0">التشخيصات</p>
         </div>
     </div>
     <div class="card text-bg-danger text-center shadow-sm" style="min-width: 120px;">
         <div class="card-body">
             <h5 class="card-title">@ViewBag.TotalPayments</h5>
-            <p class="card-text mb-0">دفعة</p>
+            <p class="card-text mb-0">الدفع</p>
         </div>
     </div>
 </div>
    
-<!-- الأزرار -->
+@* ------------------------------------------------------------------------------------------------------------------------------------------ *@
+
 <div class="row g-3 mb-4">
     <div class="col-md-2">
         <a asp-controller="Patients" asp-action="Index" class="btn btn-outline-primary w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
@@ -73,12 +80,12 @@
     </div>
     <div class="col-md-2">
         <a asp-controller="MedicalRecords" asp-action="Index" class="btn btn-outline-warning w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
-            <i class="bi bi-journal-medical me-2"></i> إدارة السجلات
+            <i class="bi bi-journal-medical me-2"></i> إدارة التشخيصات
         </a>
     </div>
     <div class="col-md-2">
         <a asp-controller="Prescriptions" asp-action="Index" class="btn btn-outline-info w-100 py-3 fs-5 d-flex align-items-center justify-content-center">
-            <i class="bi bi-capsule me-2"></i> إدارة الوصفات
+            <i class="bi bi-capsule me-2"></i> إدارة الروچتات
         </a>
     </div>
     <div class="col-md-2">
@@ -89,10 +96,12 @@
 </div>
 
 
-    <!-- مواعيد اليوم -->
+@* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ *@
+
+
     <div class="card shadow-sm mb-4">
         <div class="card-header bg-light">
-            <h5 class="mb-0">📅 مواعيد اليوم</h5>
+            <h5 class="mb-0">📅 Times of the day </h5>
         </div>
         <div class="card-body">
             @if (ViewBag.TodayAppointments != null && ViewBag.TodayAppointments.Count > 0)

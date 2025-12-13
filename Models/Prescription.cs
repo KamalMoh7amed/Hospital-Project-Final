@@ -11,12 +11,12 @@ namespace Hospital_Project.Models
 
         public string? MedicationName { get; set; }
         public string? Dosage { get; set; }
-        public int Frequency { get; set; } // Number of times per day
+        public int Frequency { get; set; }
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public string? SpecialInstructions { get; set; }
 
-        // العلاقة
+
         public MedicalRecord? MedicalRecord { get; set; }
     }
 }

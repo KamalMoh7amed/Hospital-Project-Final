@@ -17,7 +17,10 @@ namespace Hospital_Project_Final.Controllers
         {
             return View();
         }
-
+        public IActionResult Developers()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

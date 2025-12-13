@@ -14,7 +14,6 @@ namespace Hospital_Project.Controllers
             _context = context;
         }
 
-        // GET: Appointments
         public async Task<IActionResult> Index()
         {
             var appointments = await _context.Appointments
@@ -23,7 +22,6 @@ namespace Hospital_Project.Controllers
                 .ToListAsync();
             return View(appointments);
         }
-        // GET: Appointments/Create
         public async Task<IActionResult> Create()
         {
             ViewBag.Patients = await _context.Patients.ToListAsync();
@@ -31,7 +29,6 @@ namespace Hospital_Project.Controllers
             return View();
         }
 
-        // POST: Appointments/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Appointment appointment)
@@ -43,13 +40,11 @@ namespace Hospital_Project.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // لو فيه خطأ في الإدخال، يرجع نفس الصفحة مع القوائم
             ViewBag.Patients = await _context.Patients.ToListAsync();
             ViewBag.Doctors = await _context.Doctors.ToListAsync();
             return View(appointment);
 
         }
-        // GET: Appointments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Appointments == null)
@@ -68,7 +63,6 @@ namespace Hospital_Project.Controllers
             return View(appointment);
         }
 
-        // POST: Appointments/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Appointment appointment)
@@ -104,7 +98,6 @@ namespace Hospital_Project.Controllers
             return View(appointment);
         }
 
-        // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Appointments == null)
@@ -125,7 +118,6 @@ namespace Hospital_Project.Controllers
             return View(appointment);
         }
 
-        // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

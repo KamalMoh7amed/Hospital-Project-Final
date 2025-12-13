@@ -22,7 +22,6 @@ namespace Hospital_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ⚠️ منع Multiple Cascade Paths في MedicalRecord
             modelBuilder.Entity<MedicalRecord>()
                 .HasOne(mr => mr.Patient)
                 .WithMany()
@@ -41,7 +40,6 @@ namespace Hospital_Project.Data
                 .HasForeignKey(mr => mr.AppointmentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ⚠️ منع Cascade Delete من Prescription إلى MedicalRecord
             modelBuilder.Entity<Prescription>()
                 .HasOne(p => p.MedicalRecord)
                 .WithMany()
@@ -52,7 +50,7 @@ namespace Hospital_Project.Data
     .HasOne(p => p.Appointment)
     .WithMany()
     .HasForeignKey(p => p.AppointmentId)
-    .OnDelete(DeleteBehavior.Restrict); // لتجنب cascade conflicts
+    .OnDelete(DeleteBehavior.Restrict); 
         }
     }
 }
