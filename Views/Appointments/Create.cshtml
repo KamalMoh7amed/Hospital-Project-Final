@@ -14,7 +14,7 @@
             <label asp-for="PatientId" class="form-label">اختر المريض</label>
             <select asp-for="PatientId" class="form-select" required>
                 <option value="">-- اختر مريض --</option>
-                @foreach (var patient in ViewBag.Patients as List<Hospital_Project.Models.Patient>)
+                @foreach (var patient in ViewBag.Patients as List<Patient>)
                 {
                     <option value="@patient.Id">@patient.PatientName</option>
                 }
@@ -26,7 +26,7 @@
             <label asp-for="DoctorId" class="form-label">اختر الدكتور</label>
             <select asp-for="DoctorId" class="form-select" required>
                 <option value="">-- اختر دكتور --</option>
-                @foreach (var doctor in ViewBag.Doctors as List<Hospital_Project.Models.Doctor>)
+                @foreach (var doctor in ViewBag.Doctors as List<Doctor>)
                 {
                     <option value="@doctor.Id">@doctor.DoctorName - @doctor.Specialization</option>
                 }

@@ -206,7 +206,7 @@
                         <tr><th>المبلغ</th><th>التاريخ</th><th>الطريقة</th></tr>
                     </thead>
                     <tbody>
-                        @foreach (var p in ViewBag.Payments as List<Hospital_Project.Models.Payments>)
+                        @foreach (var p in ViewBag.Payments as List<Payments>)
                         {
                             <tr>
                                 <td>@p.AmountPaid.ToString("C")</td>

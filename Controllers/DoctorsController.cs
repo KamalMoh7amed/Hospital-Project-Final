@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Hospital_Project.Data;
-using Hospital_Project.Models;
-
+﻿
 namespace Hospital_Project.Controllers
 {
     public class DoctorsController : Controller

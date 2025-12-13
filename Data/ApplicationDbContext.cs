@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Hospital_Project.Models;
+﻿
 
 namespace Hospital_Project.Data
 {
